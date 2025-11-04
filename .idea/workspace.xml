@@ -32,6 +32,7 @@
   "keyToString": {
     "Application.GaussDeterminant.executor": "Run",
     "Application.Naiarana.executor": "Run",
+    "Application.SieveOfEratosthenes.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
