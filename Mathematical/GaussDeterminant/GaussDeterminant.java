@@ -12,7 +12,7 @@ public class GaussDeterminant {
         int n = in.nextInt();
 
 
-        // Initialize variables
+        // Инициализация переменных / Initialize variables
         int count = 0;        // Счётчик нулей в столбце / Counting zeroes in the column
         double multiplier;    // Множитель для опорной строки / Multiplier for the pivot row
         double support;       // Опорный элемент / Pivot element
@@ -30,11 +30,13 @@ public class GaussDeterminant {
             }
         }
 
-        /* Меняем местами первую строку (если первый её элемент 0) и первую найденную строку без первого нуля
-        *  Если первый столбец нулевой. По свойству определителя такой определитель ноль
-        *  Swapping first row (if the first element is 0) and the first found row without first 0
-        *  If the first column is full of 0. This determinant is 0 (property)
-        */
+        /**
+         * Меняем местами первую строку (если первый её элемент 0) и первую найденную строку без первого нуля
+         *  Если первый столбец нулевой. По свойству определителя такой определитель ноль
+         *  Swapping first row (if the first element is 0) and the first found row without first 0
+         *  If the first column is full of 0. This determinant is 0 (property)
+         */
+
         if(matrix[0][0] == 0){
             for (int i = 0; i < n; i++) {
                 if (matrix[i][0] !=0){
