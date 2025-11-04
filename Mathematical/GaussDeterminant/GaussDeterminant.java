@@ -7,37 +7,22 @@ public class GaussDeterminant {
     public static Scanner in = new Scanner(System.in);
     public static void main(String[] args){
 
-        //Объявление размера матрицы. В методе Гаусса она должна быть квадратной
-        //Declaring matrix size. It has to be a square matrix
+        // Объявление размера матрицы. В методе Гаусса матрица должна быть квадратной
+        // Declaring matrix size. It has to be a square matrix
         int n = in.nextInt();
 
-        //Счётчик нулей в столбце
-        //Counting zeroes in the column
-        int count = 0;
 
-        //Множитель для опорной строки
-        //Multiplier for the pivot row
-        double multiplier;
-
-        //Опорный элемент
-        //Pivot element
-        double support;
-
-        //Определитель
-        //Determinant
-        double det = 1;
+        // Initialize variables
+        int count = 0;        // Счётчик нулей в столбце / Counting zeroes in the column
+        double multiplier;    // Множитель для опорной строки / Multiplier for the pivot row
+        double support;       // Опорный элемент / Pivot element
+        double det = 1;       // Определитель / Determinant
+        int detSign = 1;      // Знак определителя / Determinant sign
 
 
-        //Знак определителя
-        //Determinant sign
-        int detSign = 1;
+        double[][] matrix = new double[n][n]; //Объявление матрицы / Declaring a matrix (2-D Array)
 
-        //Объявление матрицы (двумерного массива)
-        //Declaring a matrix (2-D Array)
-        double[][] matrix = new double[n][n];
-
-        //Заполнения матрицы элементами
-        //Filling the matrix with elements
+        //Заполнения матрицы элементами / Filling the matrix with elements
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 int element = in.nextInt();
@@ -45,14 +30,16 @@ public class GaussDeterminant {
             }
         }
 
-        //Проверка, если первый столбец нулевой. По свойству определителя такой определитель ноль
-        //Меняем местами первую строку (если первый её элемент 0) и первую найденную строку без первого нуля
-        //Checking if the first column is full of 0. This determinant is 0 (property)
-        //Swapping first row (if the first element is 0) and the first found row without first 0
+        /* Меняем местами первую строку (если первый её элемент 0) и первую найденную строку без первого нуля
+        *  Если первый столбец нулевой. По свойству определителя такой определитель ноль
+        *  Swapping first row (if the first element is 0) and the first found row without first 0
+        *  If the first column is full of 0. This determinant is 0 (property)
+        */
         if(matrix[0][0] == 0){
             for (int i = 0; i < n; i++) {
                 if (matrix[i][0] !=0){
                     SwapRows(matrix, 0, i);
+                    // Меняем знак определителя при перестановке / Changing the sign of the determinant
                     detSign *= (-1);
                     break;
                 }
@@ -61,39 +48,35 @@ public class GaussDeterminant {
                 }
             }
             if (count == n) {
-                System.out.println('0');
+                System.out.println(0);
             }
         }
 
-        //Начинаем проход по столбцам
-        //Going by columns
+        // Начинаем проход по столбцам / Going by columns
         for (int j = 0; j < n; j++) {
-            //Опорный (pivot) элемент
-            //Pivot element
+
+            // Опорный (pivot) элемент / Pivot element
             support = matrix[j][j];
 
-            //Если он ноль, то пропускаем, чтобы не делить на ноль
-            //Skip if not 0, so as not to divide by 0
+            // Если он ноль, то пропускаем, чтобы не делить на ноль / Skip if not 0, to avoid division by 0
             if (Math.abs(support) < 1e-10) {
                 continue;
             }
-            //По строкам
-            //By rows
+
+            // По строкам / By rows
             for (int i = j+1; i < n; i++){
-                //Множитель для строки, чтобы прибавить i строку и первую и получить нулевой элемент
-                //Multiplier for a row to add i-row and first row and get zero element
+
+                // Множитель для строки i / Multiplier for a row i
                 multiplier = -(matrix[i][j])/support;
 
-                //Множим все элементы строки
-                //Multiply all elements of the row
+                // Прибавляем к строке i опорную строку j, умноженную на множитель / Add to row i the pivot row j multiplied by multiplier
                 for (int k = j; k < n; k++) {
                     matrix[i][k] += multiplier * matrix[j][k];
                 }
             }
         }
 
-        //Вычисление определителя перемножением всех элементов диагонали
-        //Counting a determinant by multiplying all diagonal elements
+        // Вычисление определителя перемножением всех элементов диагонали / Counting a determinant by multiplying all diagonal elements
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++){
                 if(i == j){
@@ -102,22 +85,19 @@ public class GaussDeterminant {
             }
         }
 
-        //Выводим полученный определитель
-        //Print the determinant
+        // Выводим полученный определитель / Print the determinant
         System.out.println(Arrays.deepToString(matrix));
 
         //Если определитель по модулю 0, то выводим 0, чтобы не было проблем с +-0 из-за Double-типа переменной
         //If abs(determinant) is 0 print 0, because double variable has +-0
         if(Math.abs(det*detSign) == 0)
             System.out.println(0);
-            //Иначе выводим наш определитель
-            //Else print our determinant
+            //Иначе выводим наш определитель / Else print our determinant
         else
             System.out.printf("%.0f", det*detSign);
     }
 
-    //Метод перестановки двух строк
-    //Swapping two rows method
+    //Метод перестановки двух строк / Swapping two rows method
     public static void SwapRows(double[][] matrix, int row1, int row2){
         double[] temp = matrix[row1];
         matrix[row1] = matrix[row2];
