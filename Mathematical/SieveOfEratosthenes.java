@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.BitSet;
 import java.util.Scanner;
 
 public class SieveOfEratosthenes {
@@ -7,23 +7,21 @@ public class SieveOfEratosthenes {
     static int[] sieve(int n) {
 
         // creation of boolean array
-        boolean[] prime = new boolean[n + 1];
-        Arrays.fill(prime, true);
-        prime[0] = false;
-        prime[1] = false;
+        BitSet prime = new BitSet(n + 1);
+        prime.set(2, n+1);
 
-        for (int p = 2; p * p <= n; p++) {
-            if (prime[p]) {
-                // marking as false
-                for (int i = p * p; i <= n; i += p)
-                    prime[i] = false;
+        for(int p = 2; p*p <= n; p++) {
+            if (prime.get(p)) {
+                for (int i = p*p; i <= n; i+=p) {
+                    prime.clear(i);
+                }
             }
         }
 
         // Count number of primes
         int count = 0;
         for (int p = 2; p <= n; p++) {
-            if (prime[p])
+            if (prime.get(p))
                 count++;
         }
 
@@ -31,7 +29,7 @@ public class SieveOfEratosthenes {
         int[] res = new int[count];
         int index = 0;
         for (int p = 2; p <= n; p++) {
-            if (prime[p])
+            if (prime.get(p))
                 res[index++] = p;
         }
 
